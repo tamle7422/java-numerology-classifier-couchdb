@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Numerology Oracle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --deep: #1a1a1a;
+            --light: #f8f8f8;
+            --accent: #8b5e3c;
+        }
+        body {
+            margin: 0; padding: 0; min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+            color: #eee;
+            font-family: 'Cormorant Garamond', serif;
+            display: flex; flex-direction: column;
+        }
+        header {
+            text-align: center; padding: 2rem 1rem; background: rgba(0,0,0,0.4);
+        }
+        h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; color: var(--gold); }
+        .subtitle { font-style: italic; color: #bbb; margin-top: 0.5rem; }
+        .container {
+            max-width: 900px; margin: 2rem auto; padding: 2rem;
+            background: rgba(30,30,40,0.8); border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            flex: 1;
+        }
+        textarea {
+            width: 100%; height: 140px; padding: 1.5rem; border: 2px solid var(--gold);
+            border-radius: 15px; background: rgba(0,0,0,0.4); color: white;
+            font-size: 1.2rem; resize: none; margin-bottom: 1.5rem;
+        }
+        button {
+            background: linear-gradient(45deg, var(--gold), #f0d878);
+            color: #000; border: none; padding: 1rem 3rem; font-size: 1.3rem;
+            border-radius: 50px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 8px 20px rgba(212,175,55,0.4);
+            transition: all 0.3s;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212,175,55,0.6); }
+        .result {
+            margin-top: 2rem; padding: 2rem; background: rgba(212,175,55,0.15);
+            border: 2px solid var(--gold); border-radius: 15px; text-align: center;
+            font-size: 2.5rem; animation: fadeIn 1s;
+        }
+        .number { font-size: 5rem; color: var(--gold); font-weight: bold; }
+        nav {
+            text-align: center; margin: 2rem 0;
+        }
+        nav a {
+            color: var(--gold); text-decoration: none; margin: 0 1.5rem; font-size: 1.2rem;
+        }
+        nav a:hover { text-decoration: underline; }
+        footer {
+            text-align: center; padding: 2rem; color: #666; font-size: 0.9rem;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Numerology Oracle</h1>
+        <p class="subtitle">Discover the sacred number hidden in your words</p>
+    </header>
+
+    <nav>
+        <a href="/">Home</a> • <a href="/history">View Past Readings</a>
+    </nav>
+
+    <div class="container">
+        <form th:action="@{/predict}" method="post">
+            <textarea name="text" placeholder="Speak your truth... (e.g., 'I am a leader, creative and independent')" required></textarea>
+            <div style="text-align:center;">
+                <button type="submit">Reveal My Number</button>
+            </div>
+        </form>
+
+        <div th:if="${success}" class="result">
+            <div>Your Sacred Number Is</div>
+            <div class="number" th:text="${number}">33</div>
+            <p><em>“<span th:text="${text}"></span>”</em></p>
+        </div>
+
+        <div th:if="${error}" style="color:#ff6b6b; text-align:center; margin-top:2rem;">
+            <i class="fas fa-exclamation-triangle"></i> <span th:text="${error}"></span>
+        </div>
+    </div>
+
+    <footer>
+        Powered by sacred geometry, Python magic, and your beautiful soul
+    </footer>
+</body>
+</html>

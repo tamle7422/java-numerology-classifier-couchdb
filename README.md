@@ -12,7 +12,7 @@
 cd /path/to/project
 pip install fastapi uvicorn scikit-learn pandas
 uvicorn server:app --reload
-bash
+```
 
 ### 2. Start the frontend
 ```bash
